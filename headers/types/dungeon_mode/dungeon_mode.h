@@ -526,10 +526,7 @@ struct monster {
     struct position pixel_pos;  // 0x182: The monster's graphical position on screen?
     undefined field_0x186;
     undefined field_0x187;
-    undefined field_0x188;
-    undefined field_0x189;
-    undefined field_0x18a;
-    undefined field_0x18b;
+    int elevation_mirror; // 0x188: Mirror of the elevation field in struct entity
     // 0x18C: Bitflags that cause non-damaging exclusive items to trigger on the
     // attacker after they have completed their move. For example, the Eclipse Robe
     // (Darkrai exclusive item) may afflict attacking enemies with the nightmare
@@ -1595,10 +1592,9 @@ struct spawned_monster_data {
     struct monster_id_16 monster_id;    // 0x0: The id of the monster to spawn
     struct monster_behavior_8 behavior; // 0x2: NPC behavior of the monster
     undefined field_0x3;
-    undefined field_0x4;
-    undefined field_0x5;
-    undefined field_0x6;
-    undefined field_0x7;
+    // 0x120: If zero, when the monster is standing in a room, the AI will make it head towards a
+    // random exit. If nonzero, the monster will instead move in a random direction every turn.
+    int random_movement;
     uint16_t level;      // 0x8: The level of the spawned monster
     struct position pos; // 0xA: Position on the floor where the monster will be spawned
     // 0xE: True if the monster cannot be spawned asleep.

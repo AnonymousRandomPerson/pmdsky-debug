@@ -1503,7 +1503,7 @@ overlay11:
         NA: 0x22FF21C
         JP: 0x2300888
       description: |-
-        Seems to be the entry_point for a "mini-overlay" overlay_load_entry that lives in overlay 11, that controls eating gummis in the overworld. 
+        Seems to be the entry_point for a "mini-overlay" menu_load_entry that lives in overlay 11, that controls eating gummis in the overworld. 
         
         return: undefined4
     - name: EatOverworldGummiDestructor
@@ -1512,7 +1512,7 @@ overlay11:
         NA: 0x22FF31C
         JP: 0x2300988
       description: |-
-        Seems to be the destructor for a "mini-overlay" overlay_load_entry that lives in overlay 11, that controls eating gummis in the overworld.
+        Seems to be the destructor for a "mini-overlay" menu_load_entry that lives in overlay 11, that controls eating gummis in the overworld.
         
         No params.
     - name: EatOverworldGummiFrameUpdate
@@ -1521,7 +1521,7 @@ overlay11:
         NA: 0x22FF358
         JP: 0x23009C4
       description: |-
-        Seems to be the frame_update for a "mini-overlay" overlay_load_entry that lives in overlay 11, that controls eating gummis in the overworld.
+        Seems to be the frame_update for a "mini-overlay" menu_load_entry that lives in overlay 11, that controls eating gummis in the overworld.
         
         return: undefined4
     - name: CreateTopGroundMenu
@@ -1557,7 +1557,7 @@ overlay11:
         NA: 0x230119C
         JP: 0x23027F0
       description: |-
-        Seems to be the entry_point for a "mini-overlay" overlay_load_entry that lives in overlay 11, which controls the others menu in ground mode.
+        Seems to be the entry_point for a "mini-overlay" menu_load_entry that lives in overlay 11, which controls the others menu in ground mode.
         
         return: undefined4
     - name: GroundBagOthersMenuDestructor
@@ -1566,7 +1566,7 @@ overlay11:
         NA: 0x2301220
         JP: 0x2302874
       description: |-
-        Seems to be the destructor for a "mini-overlay" overlay_load_entry that lives in overlay 11, which controls the others menu in ground mode.
+        Seems to be the destructor for a "mini-overlay" menu_load_entry that lives in overlay 11, which controls the others menu in ground mode.
         
         No params.
     - name: GroundBagOthersMenuFrameUpdate
@@ -1575,7 +1575,7 @@ overlay11:
         NA: 0x230125C
         JP: 0x23028B0
       description: |-
-        Seems to be the frame_update for a "mini-overlay" overlay_load_entry that lives in overlay 11, which controls the others menu in ground mode.
+        Seems to be the frame_update for a "mini-overlay" menu_load_entry that lives in overlay 11, which controls the others menu in ground mode.
         
         return: undefined4
     - name: InitDiaryAndFaqBoardMenu
@@ -2219,7 +2219,7 @@ overlay11:
         - function pointer to destructor
         - possibly function pointer to frame-update function?
         
-        type: struct overlay_load_entry[21]
+        type: struct menu_load_entry[21]
     - name: OV11_STATIC_INITIALIZER
       address:
         EU: 0x2325790

@@ -19,7 +19,7 @@ overlay18:
         NA: 0x238A140
         JP: 0x238B6A0
       description: |-
-        Is the entrypoint of the overlay_load_entry, and seems to run once to initiate the Link Shop. Is not called anywhere else.
+        Is the entrypoint of the menu_load_entry, and seems to run once to initiate the Link Shop. Is not called anywhere else.
         Allocates space for link_shop, and initializes many of its fields.
         
         return: Always returns 1.
@@ -29,7 +29,7 @@ overlay18:
         NA: 0x238AFD4
         JP: 0x238C530
       description: |-
-        Is the destructor of the overlay_load_entry, and seems to run once on closing the Link Shop. Is not called anywhere else.
+        Is the destructor of the menu_load_entry, and seems to run once on closing the Link Shop. Is not called anywhere else.
         Frees up the allocated space for link_shop if it is not already empty.
         
         No params.

@@ -1505,6 +1505,8 @@ overlay29:
       description: |-
         Calling this function with r0 = 6 (or its duplicates in the switch statement) will normally close the minimap, while r0 = 0 will reopen it.
         
+        Closing it requires some additional function calls if the alert box is open (see CloseMinimap's code).
+        
         When called in certain places, the function will crash the game instead?
         
         Also does nothing if the passed case is the same as the last case used (or 0 if the last case was 0xd).
@@ -2383,6 +2385,15 @@ overlay29:
         r0: x
         r1: y
         return: true if there was a hidden trap to reveal
+    - name: CheckBossFightVictory
+      address:
+        EU: 0x22F0178
+      description: |-
+        Checks if the boss fight should be marked as won after the given entity has fainted.
+        
+        r0: fainted entity
+        r1: behavior of fainted monster (the function will do nothing if it's not a fixed room enemy)
+        r2: whether to change the music if the boss fight is over
     - name: ShouldRunMonsterAi
       address:
         EU: 0x22F03A0
@@ -2481,6 +2492,13 @@ overlay29:
         Subtracts the amount of money from the the player's current amount of money and plays the sound effect for buying an item.
         
         r0: money amount
+    - name: ReopenMinimap
+      address:
+        EU: 0x22F11FC
+      description: |-
+        Reopens the minimap if the option to hide it is not set.
+        
+        No params.
     - name: GonePebbleGradualPaletteShift
       address:
         EU: 0x22F1210
@@ -3666,7 +3684,17 @@ overlay29:
         NA: 0x22FF1C8
         JP: 0x23005B8
       description: |-
-        Returns true if the monster has any status problem that prevents it from acting
+        Returns true if the monster has any status problem that prevents its AI from acting.
+        
+        r0: Entity pointer
+        return: True if the specified monster can't act because of a status problem, false otherwise.
+    - name: HasStatusThatPreventsLeaderActing
+      address:
+        EU: 0x22FFE20
+      description: |-
+        Returns true if the monster has any status problem that prevents it from acting as the leader.
+        
+        Also executes the monster's two-turn move if it is charging one.
         
         r0: Entity pointer
         return: True if the specified monster can't act because of a status problem, false otherwise.
@@ -3980,6 +4008,14 @@ overlay29:
         
         r0: Entity pointer
         r1: If true, return 1 if entity is blinded
+        return: bool
+    - name: HasStatusThatPreventsOutlawEscaping
+      address:
+        EU: 0x2301530
+      description: |-
+        Checks if a monster has a status (any kind of sleep or status under status_frozen) that prevents it from escaping as an outlaw.
+        
+        r0: entity pointer
         return: bool
     - name: CheckVariousConditions
       address:
@@ -6105,6 +6141,13 @@ overlay29:
         r2: flag to log a message on failure
         r3: flag to only perform the check for inflicting without actually inflicting
         return: Whether or not the status could be inflicted
+    - name: EndLeechSeedStatusForAllTargets
+      address:
+        EU: 0x2316434
+      description: |-
+        Ends the Leech Seed status for all monsters that the given monster gave the status to.
+        
+        r0: user entity pointer
     - name: TryInflictDestinyBondStatus
       address:
         EU: 0x23164B0
@@ -6653,6 +6696,38 @@ overlay29:
         
         r0: target entity pointer
         r1: two_turn_move_invincible value
+    - name: WaitUntilMonsterFliesOffscreen
+      address:
+        EU: 0x2319534
+      description: |-
+        Waits in a loop until the monster has flown offscreen (used for the effect of Seismic Toss and moves like Fly/Bounce).
+        
+        r0: entity pointer
+    - name: WaitUntilMonsterIsBackOnGround
+      address:
+        EU: 0x23195A8
+      description: |-
+        Waits in a loop until the monster is back on the ground (used for the effect of Seismic Toss).
+        
+        r0: entity pointer
+    - name: BeginChargedMove
+      address:
+        EU: 0x231961C
+      description: |-
+        Begins the given charged move for the target entity.
+        
+        r0: user entity pointer
+        r1: target entity pointer (always the same)
+        r2: status id
+        r3: move pointer
+        stack[0]: string to log as the message
+    - name: EndTwoTurnMove
+      address:
+        EU: 0x23197B8
+      description: |-
+        Ends a two-turn move for the given entity, resetting its relevant fields.
+        
+        r0: entity pointer
     - name: SetReflectStatus
       address:
         EU: 0x23197F8
@@ -10147,6 +10222,13 @@ overlay29:
         Handles the fanfare for completing the mission, runs TryCompleteMission, and calls MissionExitPrompt.
         
         No params.
+    - name: TryFleeingOutlawEscapeFloor
+      address:
+        EU: 0x234B890
+      description: |-
+        Checks if the monster is a fleeing outlaw and if so, whether it can escape the floor if it is standing on the stairs.
+        
+        r0: entity pointer
     - name: TeleportFleeingOutlaw
       address:
         EU: 0x234BAA4
@@ -10401,6 +10483,10 @@ overlay29:
         
         r0: user entity pointer
         r1: message string
+    - name: GetAlertBoxLoadingStatus
+      address:
+        EU: 0x234C0F4
+      description: "return: message_log_info->alert_box_info::loading_status"
     - name: LogMessage
       address:
         EU: 0x234C108
@@ -10448,6 +10534,19 @@ overlay29:
         JP: 0x234CC7C
       description: |-
         Calls AdvanceFrame in a loop until the dungeon alert box has finished scrolling.
+        
+        r0: value to pass to AdvanceFrame (unused by the function)
+    - name: WaitUntilAlertBoxPauseIsOver
+      address:
+        EU: 0x234C654
+      description: |-
+        Waits until the dungeon alert box has finished scrolling, then waits until one of the following conditions is true:
+        
+        - The alert box has less than 180 frames until closing (countdown starts at 240 in LogMessage)
+        - Both A and B are held
+        - A key on the d-pad (up, down, left, right) is pressed
+        
+        There is also a check for if the loop passes 240 iterations, but in practice the first condition above will always come first.
         
         r0: value to pass to AdvanceFrame (unused by the function)
     - name: InitPortraitDungeon
@@ -10508,6 +10607,13 @@ overlay29:
         r0: Fade type
         r1: Change of brightness per frame
         r2: Screen to fade
+    - name: WaitUntilFadeIsFinished
+      address:
+        EU: 0x234D338
+      description: |-
+        Waits in a loop until the screen fade on the given screen is finished.
+        
+        r0: enum screen
     - name: HandleFadesDungeon
       address:
         EU: 0x234D3D4
@@ -10609,6 +10715,13 @@ overlay29:
         r2: Option that the cursor will be on by default. 0 for "Yes", 1 for "No"
         r3: ?
         return: True if the user chooses "Yes", false if the user chooses "No"
+    - name: CloseMinimap
+      address:
+        EU: 0x234E158
+      description: |-
+        Closes the minimap.
+        
+        No params.
     - name: DisplayMessageInternal
       address:
         EU: 0x234E190
@@ -11725,6 +11838,12 @@ overlay29:
         Note that this array is only used for the cardinal directions. The elements at odd indexes are unused and unconditionally set to 0.
         
         This array is used by the dungeon generation algorithm when generating room imperfections. See GenerateRoomImperfections.
+    - name: DEFEAT_STRING_IDS
+      address:
+        EU: 0x2353E4C
+      length:
+        EU: 0x4
+      description: "List that holds the string IDs for a monster being defeated (0 is 'was defeated!', 1 is 'fainted!')"
     - name: GUMMI_LIKE_STRING_IDS
       address:
         EU: 0x2353EE0

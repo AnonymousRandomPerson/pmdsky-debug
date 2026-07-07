@@ -4,7 +4,7 @@
 extern uint8_t QUIZ_BORDER_COLOR_TABLE[2];
 extern struct vec2 PARTNER_PORTRAIT_OFFSET;
 extern uint8_t PLAY_OLD_GAME_BOOST[2][4];
-extern struct overlay_load_entry OVERLAY13_LOAD_ENTRY;
+extern struct menu_load_entry OVERLAY13_LOAD_ENTRY;
 extern struct window_params MAIN_DBOX_WINDOW_PARAMS;
 extern struct window_params AURA_BOW_DBOX_WINDOW_PARAMS;
 extern struct window_params DEBUG_WINDOW_PARAMS;

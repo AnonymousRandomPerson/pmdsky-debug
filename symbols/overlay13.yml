@@ -155,7 +155,7 @@ overlay13:
         
         The entrypoint function is NOT specified here, as overlay 11 directly calls PersonalityTestEntryPoint after loading the overlay.
         
-        type: overlay_load_entry
+        type: menu_load_entry
     - name: MAIN_DBOX_WINDOW_PARAMS
       aliases:
         - QUIZ_WINDOW_PARAMS_1

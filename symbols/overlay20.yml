@@ -39,7 +39,7 @@ overlay20:
         NA: 0x238A160
         JP: 0x238B6C0
       description: |-
-        The shared destructor of both recycle shop overlay_load_entries, suspending operations of the overlay.
+        The shared destructor of both recycle shop menu_load_entries, suspending operations of the overlay.
         
         No params.
     - name: RecycleShopFrameUpdate
@@ -48,7 +48,7 @@ overlay20:
         NA: 0x238A1B0
         JP: 0x238B710
       description: |-
-        The shared frame_update of both recycle shop overlay_load_entries, managing operations of the overlay each frame.
+        The shared frame_update of both recycle shop menu_load_entries, managing operations of the overlay each frame.
         
         return: undefined4
     - name: RecycleShopCommonEntryPoint
@@ -57,7 +57,7 @@ overlay20:
         NA: 0x238B294
         JP: 0x238C7F4
       description: |-
-        Effectively the shared entry_point of both recycle shop overlay_load_entry, called immediately by both real entry_points to the overlay.
+        Effectively the shared entry_point of both recycle shop menu_load_entry, called immediately by both real entry_points to the overlay.
         
         r0: 1 if resuming, 0 if first entry.
         return: undefined4

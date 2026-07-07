@@ -222,6 +222,8 @@ void ChangeTrapOnTile(struct tile* tile, enum trap_id trap_id);
 int SpawnMonstersAroundPos(struct entity* monster, struct position* pos, uint8_t num_enemies);
 void RevealTrapsNearby(struct entity* monster);
 bool RevealTrapAtPos(int x, int y);
+void CheckBossFightVictory(struct entity* fainted_entity, enum monster_behavior behavior,
+                           bool change_music);
 bool ShouldRunMonsterAi(struct entity* monster);
 bool DebugRecruitingEnabled(void);
 void TryActivateIqBooster(void);
@@ -234,6 +236,7 @@ bool TalkToSecretBazaarNpcWithYesNoMenu(int string_id, struct entity* shopkeeper
                                         struct simple_menu_id_item* menu_items);
 void MakeTargetFaceUserAndIdle(struct entity* target, struct entity* user);
 void SubtractMoneyCarriedWithSfx(int amount);
+void ReopenMinimap(void);
 void GonePebbleGradualPaletteShift(struct rgba* palette, uint32_t param_2);
 bool TalkToSecretBazaarNpc(int string_id, struct entity* shopkeeper, enum portrait_emotion emotion,
                            struct simple_menu_id_item* menu_items, bool param_5);
@@ -348,6 +351,7 @@ void GetOutlawSpawnData(struct spawned_target_data* outlaw);
 bool ExecuteMonsterAction(struct entity* monster);
 void TryActivateFlashFireOnAllMonsters(void);
 bool HasStatusThatPreventsActing(struct entity* monster);
+bool HasStatusThatPreventsLeaderActing(struct entity* monster);
 enum mobility_type GetMobilityTypeCheckSlip(enum monster_id species, bool walk_on_water);
 enum mobility_type GetMobilityTypeCheckSlipAndFloating(struct entity* monster,
                                                        enum monster_id species);
@@ -377,6 +381,7 @@ bool MonsterHasNegativeStatus(struct entity* monster, bool check_held_item);
 bool IsMonsterSleeping(struct entity* monster);
 bool MonsterHasQuarterHp(struct entity* monster);
 bool CheckVariousStatuses2(struct entity* entity, bool blind_check);
+bool HasStatusThatPreventsOutlawEscaping(struct entity* monster);
 bool CheckVariousConditions(struct entity* entity);
 bool CheckVariousStatuses(struct entity* entity);
 bool MonsterCannotAttack(struct entity* entity, bool skip_sleep);
@@ -619,6 +624,7 @@ void RevealStairs(struct entity* user, struct entity* target);
 void RevealEnemies(struct entity* user, struct entity* target);
 bool TryInflictLeechSeedStatus(struct entity* user, struct entity* target, bool log_failure,
                                bool check_only);
+void EndLeechSeedStatusForAllTargets(struct entity* user);
 void TryInflictDestinyBondStatus(struct entity* user, struct entity* target);
 void TryInflictSureShotStatus(struct entity* user, struct entity* target, uint8_t turns);
 void TryInflictWhifferStatus(struct entity* user, struct entity* target, uint8_t turns,
@@ -677,6 +683,11 @@ bool TryInflictMiracleEyeStatus(struct entity* user, struct entity* target, bool
 void TryInflictMagnetRiseStatus(struct entity* user, struct entity* target);
 bool IsFloating(struct entity* entity);
 void SetTwoTurnInvincibility(struct entity* target, enum two_turn_invincibility value);
+void WaitUntilMonsterFliesOffscreen(struct entity* entity);
+void WaitUntilMonsterIsBackOnGround(struct entity* entity);
+void BeginChargedMove(struct entity* user, struct entity* target, enum status_two_turn_id status,
+                      struct move* move, char* message);
+void EndTwoTurnMove(struct entity* entity);
 void SetReflectStatus(struct entity* user, struct entity* target, enum status_reflect_id status);
 void TryInflictSafeguardStatus(struct entity* user, struct entity* target);
 void TryInflictMistStatus(struct entity* user, struct entity* target);
@@ -1037,6 +1048,7 @@ void GenerateMissionEggMonster(struct mission* mission);
 struct entity* GetFirstExperienceLockedTeamMember(void);
 void TryCompleteMission(undefined param_1, undefined param_2);
 void TreasureMemoComplete(void);
+void TryFleeingOutlawEscapeFloor(struct entity* entity);
 void TeleportFleeingOutlaw(void);
 void InitAlertBoxInfo(void);
 void FreeAlertBoxInfo(void);
@@ -1066,11 +1078,13 @@ void LogMessageByIdWithPopupCheckUserUnknown(struct entity* user, undefined4* pa
                                              int message_id);
 void LogMessageByIdWithPopup(struct entity* user, int message_id);
 void LogMessageWithPopup(struct entity* user, const char* message);
+int GetAlertBoxLoadingStatus(void);
 void LogMessage(struct entity* user, const char* message, bool show_popup);
 void LogMessageById(struct entity* user, int message_id, bool show_popup);
 bool AlertBoxIsActive(void);
 bool AlertBoxIsScrolling(void);
 void WaitUntilAlertBoxTextIsLoaded(undefined param_1);
+void WaitUntilAlertBoxPauseIsOver(undefined param_1);
 void InitPortraitDungeon(struct portrait_params* portrait, enum monster_id monster_id,
                          enum portrait_emotion emotion);
 void OpenMessageLog(undefined4 param_1, undefined4 param_2);
@@ -1078,6 +1092,7 @@ bool RunDungeonMode(undefined4* param_1, undefined4 param_2);
 void StartFadeDungeon(struct dungeon_fade* fstruct, int delta_delta_brightness,
                       enum fade_status_dungeon fade_type);
 void StartFadeDungeonWrapper(int fade_type, int delta_delta_brightness, enum screen screen);
+void WaitUntilFadeIsFinished(enum screen screen);
 void HandleFadesDungeon(enum screen screen);
 void HandleFadesDungeonBothScreens();
 bool DisplayFloorTip(void);
@@ -1088,6 +1103,7 @@ int GetPersonalityIndex(struct monster* monster);
 void DisplayMessage(struct portrait_params* portrait, int message_id, bool wait_for_input);
 void DisplayMessage2(struct portrait_params* portrait, int message_id, bool wait_for_input);
 bool YesNoMenu(undefined param_1, int string_id, int default_option, undefined param_4);
+void CloseMinimap(void);
 void DisplayMessageInternal(int message_id, bool wait_for_input, struct portrait_params* portrait,
                             undefined4 param_4, undefined4 param_5, undefined4 param_6);
 void PrintMissionCompleteString(int string_id, undefined4 param_2, undefined4 param_3,

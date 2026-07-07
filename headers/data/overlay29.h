@@ -89,6 +89,7 @@ extern int32_t ATK_STAT_IDX;
 extern fx32_8 ROLLOUT_DAMAGE_MULT_TABLE[10];
 extern struct rgba MAP_COLOR_TABLE[9];
 extern bool CORNER_CARDINAL_NEIGHBOR_IS_OPEN[4][8];
+extern int16_t DEFEAT_STRING_IDS[2];
 extern int16_t GUMMI_LIKE_STRING_IDS[4];
 extern int16_t GUMMI_IQ_STRING_IDS[5];
 extern int16_t DAMAGE_STRING_IDS[27];

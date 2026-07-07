@@ -81,7 +81,7 @@ extern struct window_params CONTROLS_CHART_DEFAULT_WINDOW_PARAMS;
 extern struct window_params ALERT_BOX_DEFAULT_WINDOW_PARAMS;
 extern struct window_params ADVANCED_TEXT_BOX_DEFAULT_WINDOW_PARAMS;
 extern struct window_params TEAM_SELECTION_MENU_DEFAULT_WINDOW_PARAMS;
-extern struct overlay_load_entry NULL_OVERLAY_LOAD_ENTRY;
+extern struct menu_load_entry NULL_MENU_LOAD_ENTRY;
 extern struct partner_talk_kind_table_entry PARTNER_TALK_KIND_TABLE[11];
 extern struct prog_pos_info EVENT_FLAG_PROG_POS_INFO_CALC_SCRIPT_VARIABLES;
 extern struct prog_pos_info EVENT_FLAG_PROG_POS_INFO_COMPARE_SCRIPT_VARIABLES;

@@ -58,7 +58,7 @@ overlay26:
         JP: 0x238BED0
       description: |-
         Just a guess. See ApplyRuleDungeonEffectsFrameUpdate for further explanation.
-        Is an entry_point for an overlay_load_entry.
+        Is an entry_point for a menu_load_entry.
         
         r0: undefined4
         r1: undefined4
@@ -72,7 +72,7 @@ overlay26:
         JP: 0x238BEFC
       description: |-
         Just a guess. See ApplyRuleDungeonEffectsFrameUpdate for further explanation.
-        Is a destructor for an overlay_load_entry.
+        Is a destructor for a menu_load_entry.
         
         No params.
     - name: ApplyRuleDungeonEffectsFrameUpdate
@@ -83,7 +83,7 @@ overlay26:
       description: |-
         Just a guess. After enough frames pass, conditionally calls GetMaxItemsAllowed, RemoveAllItemsStartingAt, IsMoneyAllowed, and SetMoneyCarried, 
         as well as a handful of unknown functions that likely check if the entered dungeon is a rule dungeon. 
-        Is a frame_update for an overlay_load_entry.
+        Is a frame_update for a menu_load_entry.
         
         return: undefined4
     - name: ExitDungeon1EntryPoint
@@ -93,7 +93,7 @@ overlay26:
         JP: 0x238BFC8
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is in mission mode?
-        Is an entry_point for an overlay_load_entry.
+        Is an entry_point for a menu_load_entry.
         
         r0: undefined4
         r1: undefined4
@@ -107,7 +107,7 @@ overlay26:
         JP: 0x238BFF4
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is in mission mode?
-        Is a destructor for an overlay_load_entry.
+        Is a destructor for a menu_load_entry.
         
         No params.
     - name: ExitDungeon1FrameUpdate
@@ -117,7 +117,7 @@ overlay26:
         JP: 0x238C020
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is in mission mode?
-        Is a frame_update for an overlay_load_entry.
+        Is a frame_update for a menu_load_entry.
         
         return: undefined4
     - name: UnkOv26EntryPointEu0238b754
@@ -126,7 +126,7 @@ overlay26:
         NA: 0x238AC14
         JP: 0x238C174
       description: |-
-        Is an unidentified entry_point for an overlay_load_entry.
+        Is an unidentified entry_point for a menu_load_entry.
         
         r0: undefined4
         r1: undefined4
@@ -139,7 +139,7 @@ overlay26:
         NA: 0x238AC40
         JP: 0x238C1A0
       description: |-
-        Is an unidentified destructor for an overlay_load_entry.
+        Is an unidentified destructor for a menu_load_entry.
         
         No params.
     - name: UnkOv26FrameUpdateEu0238b7ac
@@ -148,7 +148,7 @@ overlay26:
         NA: 0x238AC6C
         JP: 0x238C1CC
       description: |-
-        Is an unidentified frame_update for an overlay_load_entry.
+        Is an unidentified frame_update for a menu_load_entry.
         
         return: undefined4
     - name: DungeonExitEntryPoint2
@@ -158,7 +158,7 @@ overlay26:
         JP: 0x238C238
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is not in mission mode?
-        Is an entry_point for an overlay_load_entry.
+        Is an entry_point for a menu_load_entry.
         
         r0: undefined4
         r1: undefined4
@@ -172,7 +172,7 @@ overlay26:
         JP: 0x238C270
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is not in mission mode?
-        Is a destructor for an overlay_load_entry.
+        Is a destructor for a menu_load_entry.
         
         No params.
     - name: DungeonExitFrameUpdate2
@@ -182,7 +182,7 @@ overlay26:
         JP: 0x238C29C
       description: |-
         Seems to get called on exiting a dungeon. Might be exclusive to whether the dungeon is not in mission mode?
-        Is a frame_update for an overlay_load_entry.
+        Is a frame_update for a menu_load_entry.
         
         return: undefined4
   data:
@@ -408,7 +408,7 @@ overlay26:
         EU: 0x4
         NA: 0x4
       description: |-
-        A pointer to a struct of unknown size, responsible for the operations of the ApplyRuleDungeonEffects* overlay_load_entry.
+        A pointer to a struct of unknown size, responsible for the operations of the ApplyRuleDungeonEffects* menu_load_entry.
         
         type: undefined*
     - name: EXIT_DUNGEON_1_STRUCT_PTR
@@ -420,7 +420,7 @@ overlay26:
         EU: 0x4
         NA: 0x4
       description: |-
-        A pointer to a struct of unknown size, responsible for the operations of the DungeonExit1* overlay_load_entry.
+        A pointer to a struct of unknown size, responsible for the operations of the DungeonExit1* menu_load_entry.
         
         type: undefined*
     - name: OVERLAY26_UNKNOWN_POINTER__NA_238AF6C
@@ -441,6 +441,6 @@ overlay26:
         EU: 0x4
         NA: 0x4
       description: |-
-        A pointer to a struct of unknown size, responsible for the operations of the DungeonExit2* overlay_load_entry. 
+        A pointer to a struct of unknown size, responsible for the operations of the DungeonExit2* menu_load_entry. 
         
         type: undefined*

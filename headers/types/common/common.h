@@ -122,14 +122,16 @@ struct mem_arena_getters {
 };
 ASSERT_SIZE(struct mem_arena_getters, 8);
 
-struct overlay_load_entry {
-    enum overlay_group_id group;
-    // These are function pointers, but not sure of the signature.
-    void* entrypoint;
-    void* destructor;
-    void* frame_update; // Possibly?
+typedef void (*menu_gateway_fn_t)(void);
+typedef int (*menu_update_fn_t)(void);
+
+struct menu_load_entry {
+    enum overlay_group_id group;   // 0x0
+    menu_gateway_fn_t entrypoint;  // 0x4
+    menu_gateway_fn_t destructor;  // 0x8
+    menu_update_fn_t frame_update; // 0xC
 };
-ASSERT_SIZE(struct overlay_load_entry, 16);
+ASSERT_SIZE(struct menu_load_entry, 16);
 
 // Struct containing information about an overlay. The entries are copied from y9.bin.
 struct overlay_info_entry {
@@ -1267,8 +1269,8 @@ ASSERT_SIZE(struct monster_file_contents, 78548);
 
 // Master struct for controlling the game's menus.
 struct menu_control {
-    // 0x0: An overlay_load_entry with all zeroes. Doesn't seem to be used for anything.
-    struct overlay_load_entry null_entry;
+    // 0x0: A menu_load_entry with all zeroes. Doesn't seem to be used for anything.
+    struct menu_load_entry null_entry;
     // 0x10: Whether to load a new menu on the next call of HandleMenus
     bool load_new_menu;
     undefined field_0x11;
@@ -1276,7 +1278,7 @@ struct menu_control {
     undefined field_0x13;
     // 0x14: The incoming entry which is set in InitMenu.
     // When loading a new menu, it is copied to active_entry and then zeroed out.
-    struct overlay_load_entry incoming_entry;
+    struct menu_load_entry incoming_entry;
     // 0x24: Whether there is a window_extra_info struct for CopyMenuControlWindowExtraInfo
     int has_window_extra_info;
     struct window_extra_info window_extra_info; // 0x28
@@ -1284,7 +1286,7 @@ struct menu_control {
     undefined field_0xc1;
     undefined field_0xc2;
     undefined field_0xc3;
-    struct overlay_load_entry active_entry; // 0xC4: The entry for the currently active menu
+    struct menu_load_entry active_entry; // 0xC4: The entry for the currently active menu
     // 0xD4: 0 means no menu active, 1 means menu initializing, 2 means menu active, 3 means ???
     int state;
     // 0xD8: Whether the overlay in active_entry should be unloaded upon calling FreeMenu

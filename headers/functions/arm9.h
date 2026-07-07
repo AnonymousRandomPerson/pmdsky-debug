@@ -855,10 +855,10 @@ void InventoryMenuNextPage(struct inventory_menu_input_ctx* ctx);
 void InventoryMenuPreviousPage(struct inventory_menu_input_ctx* ctx);
 void InventoryMenuNext10Pages(struct inventory_menu_input_ctx* ctx);
 void InventoryMenuPrevious10Pages(struct inventory_menu_input_ctx* ctx);
-bool OverlayLoadEntriesEqual(struct overlay_load_entry* entry1, struct overlay_load_entry* entry2);
+bool MenuLoadEntriesEqual(struct menu_load_entry* entry1, struct menu_load_entry* entry2);
 void FreeActiveMenu(void);
-bool InitMenu(struct overlay_load_entry* entry);
-bool InitMenuWithWindowExtraInfo(struct overlay_load_entry* entry, bool init_extra_info,
+bool InitMenu(struct menu_load_entry* entry);
+bool InitMenuWithWindowExtraInfo(struct menu_load_entry* entry, bool init_extra_info,
                                  struct window_extra_info* window_extra_info);
 bool CopyMenuControlWindowExtraInfo(struct window_extra_info* window_extra_info);
 void HandleMenus(void);
