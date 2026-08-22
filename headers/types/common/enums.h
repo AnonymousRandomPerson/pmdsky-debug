@@ -4391,4 +4391,26 @@ enum mission_reward_frame_update_case {
     // There are more, seems like it goes up to case 21
 };
 
+enum wan_offset_type {
+    WAN_OFFSET_HEAD = 0,
+    WAN_OFFSET_HAND_LEFT = 1,
+    WAN_OFFSET_HAND_RIGHT = 2,
+    WAN_OFFSET_CENTER = 3,
+};
+
+// This is sometimes stored as an 8-bit integer
+#pragma pack(push, 1)
+ENUM_8_BIT(wan_offset_type);
+#pragma pack(pop)
+
+enum effect_file_type {
+    EFFECT_FILE_INVALID = 0,
+    EFFECT_FILE_WAN_FILE_0 = 1,
+    EFFECT_FILE_WAN_FILE_1 = 2,
+    EFFECT_FILE_WAN = 3,
+    EFFECT_FILE_WAT = 4,
+    EFFECT_FILE_SCREEN = 5,
+    EFFECT_FILE_WBA = 6,
+};
+
 #endif

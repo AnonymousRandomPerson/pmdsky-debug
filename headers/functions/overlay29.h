@@ -58,12 +58,13 @@ bool ItemIsActive(struct entity* entity, enum item_id item_id);
 int GetVisibilityRange(void);
 void RevealWholeFloor(struct entity* entity);
 bool DungeonScreenEffectActive(void);
-int PlayEffectAnimationEntity(struct entity* entity, int effect_id, bool play_now, int param_4,
-                              int param_5, undefined param_6, enum direction_id effect_dir,
+int PlayEffectAnimationEntity(struct entity* entity, int effect_id, bool blocking,
+                              enum wan_offset_type wan_offset, uint8_t finish_cur_effects_first,
+                              bool play_if_two_turn_invisible, enum direction_id effect_dir,
                               uint16_t* custom_oam_adjustment_info);
-int PlayEffectAnimationPos(struct position* pos, int effect_id, bool play_now);
-int PlayEffectAnimationPixelPos(struct pixel_position* pixel_pos, int effect_id, bool play_now);
-void AnimationDelayOrSomething(undefined param_1);
+int PlayEffectAnimationPos(struct position* pos, int effect_id, bool blocking);
+int PlayEffectAnimationPixelPos(struct pixel_position* pixel_pos, int effect_id, bool blocking);
+void FinishPlayingEffectAnimations(bool wait_for_non_blocking);
 void CopyStatusIconFlags(struct status_icon_flags* dst, struct entity* src);
 void UpdateStatusIconFlags(struct entity* entity);
 void PlayQuestionMarkEffect(struct entity* entity);
@@ -315,7 +316,8 @@ bool DefenderAbilityIsActive(struct entity* attacker, struct entity* defender,
 bool IsMonster(struct entity* entity);
 void TryActivateConversion2(struct entity* attacker, struct entity* defender, struct move* move);
 void TryActivateTruant(struct entity* entity);
-void TryPointCameraToMonster(struct entity* entity, undefined param_2, undefined param_3);
+void TryPointCameraToFarOffTeammate(struct entity* entity);
+void TryPointCameraToMonster(struct entity* entity, undefined param_2, bool discover_minimap);
 void ReevaluateSnatchMonster(void);
 struct entity* GetRandomExplorerMazeMonster(void);
 void RestorePpAllMovesSetFlags(struct entity* entity);
@@ -504,6 +506,7 @@ void EndMagnetRiseStatus(struct entity* user, struct entity* target);
 bool TransferNegativeBlinkerClassStatus(struct entity* user, struct entity* target);
 bool TryEndPetrifiedOrSleepStatus(struct entity* user, struct entity* target);
 void EndFrozenStatus(struct entity* user, struct entity* target);
+void ResetTypeChanges(struct entity* user);
 void EndProtectStatus(struct entity* user, struct entity* target);
 void TryRestoreRoostTyping(struct entity* user, struct entity* target);
 void TryTriggerMonsterHouse(struct entity* entity, bool outside_enemies);
@@ -662,7 +665,7 @@ void RevealStairs(struct entity* user, struct entity* target);
 void RevealEnemies(struct entity* user, struct entity* target);
 bool TryInflictLeechSeedStatus(struct entity* user, struct entity* target, bool log_failure,
                                bool check_only);
-void EndLeechSeedStatusForAllTargets(struct entity* user);
+void EndLeechSeedClassStatusForAllTargets(struct entity* user);
 void TryInflictDestinyBondStatus(struct entity* user, struct entity* target);
 void TryInflictSureShotStatus(struct entity* user, struct entity* target, uint8_t turns);
 void TryInflictWhifferStatus(struct entity* user, struct entity* target, uint8_t turns,

@@ -5039,6 +5039,24 @@ arm9:
         Displays the current frame of the animation_control struct and switches it afterwards if applicable.
         
         r0: animation_control
+    - name: GetPixelOffsetFromSprite
+      address:
+        EU: 0x201D02C
+      description: |-
+        Converts a WAN offset on a sprite into a pixel offset.
+        
+        r0: [output] pixel offset (99 in a field means there is no offset)
+        r1: animation_control of sprite
+        r2: WAN offset type
+    - name: FillPixelOffsetArrayFromSprite
+      address:
+        EU: 0x201D0D0
+      description: |-
+        Converts the first array_len WAN offsets on a sprite into an array of pixel offsets.
+        
+        r0: [output] array of pixel offsets of size array_len (99 in a field means there is no offset)
+        r1: array_len
+        r2: animation_control of sprite
     - name: FillOamAdjustmentInfo
       aliases:
         - FillOamAttributeInfo

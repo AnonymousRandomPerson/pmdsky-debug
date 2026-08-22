@@ -160,16 +160,17 @@ overlay10:
         
         r0: sprite index in wan_table to load from
         r1: 0 for 8bpp, 1 for 4bpp
-    - name: GetEffectAnimationField0x19
+        r2: starting palette number for 4bpp
+    - name: GetEffectAnimationWanOffset
       address:
         EU: 0x22BE7F4
         NA: 0x22BDEB4
         JP: 0x22BF658
       description: |-
-        Calls GetEffectAnimation and returns field 0x19.
+        Calls GetEffectAnimation and returns its wan_offset field.
         
         r0: anim_id
-        return: GetEffectAnimation(anim_id)->field_0x19.
+        return: GetEffectAnimation(anim_id)->wan_offset
     - name: ScreenEffectActive
       address:
         EU: 0x22C0228
@@ -179,17 +180,18 @@ overlay10:
         Returns true if a screen effect (like Leaf Storm's or cutscene rain) is currently active on the given screen.
         
         r0: screen
-    - name: AnimationHasMoreFrames
+    - name: BlockingAnimationInProgress
+      aliases:
+        - AnimationHasMoreFrames
       address:
         EU: 0x22C0244
         NA: 0x22BF904
         JP: 0x22C10A8
       description: |-
-        Just a guess. This is called in a loop in PlayEffectAnimation, and the output controls whether or not AdvanceFrame continues to be called.
-        If the current effect animation's is_non_blocking field is set, the function will return false the very first time it is called.
+        Checks if there is an effect animation with the given unique id in progress and if so, whether its is_non_blocking field is 0.
         
-        r0: ?
-        return: whether or not the animation still has more frames left?
+        r0: unique id of animation
+        return: bool
     - name: GetEffectAnimation
       address:
         EU: 0x22C07E0

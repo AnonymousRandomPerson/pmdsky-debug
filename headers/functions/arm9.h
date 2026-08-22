@@ -531,6 +531,10 @@ void LoadAnimationFrameAndIncrementInAnimationControl(struct animation_control* 
                                                       struct wan_animation_frame* anim_frame);
 void DisplayAnimationControlCurrentFrame(struct animation_control* anim_ctrl);
 void DisplayAndSwitchAnimationControlCurrentFrame(struct animation_control* anim_ctrl);
+void GetPixelOffsetFromSprite(struct vec2_16* pixel_offset, struct animation_control* sprite,
+                              enum wan_offset_type wan_offset);
+void FillPixelOffsetArrayFromSprite(struct vec2_16* pixel_offsets, uint8_t array_len,
+                                    struct animation_control* sprite);
 void FillOamAdjustmentInfo(struct animation_control* dst, uint16_t* src);
 uint32_t AnimationControlGetAllocForMaxFrame(struct animation_control* anim_ctrl);
 void SetAnimationControlPausedFlag(struct animation_control* anim_ctrl, bool new_val);

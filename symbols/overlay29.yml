@@ -782,17 +782,17 @@ overlay29:
         NA: 0x22E35E4
         JP: 0x22E4C54
       description: |-
-        Just a guess. This appears to be paired often with GetEffectAnimationField0x19, and also has calls AnimationHasMoreFrames in a loop alongside AdvanceFrame(66) calls.
-        
-        The third parameter skips the loop entirely. It seems like in this case the function might just preload some animation frames for later use??
+        Plays an effect animation on an entity.
         
         r0: entity pointer
         r1: Effect ID
-        r2: appears to be a flag for actually running the animation now? If this is 0, the AdvanceFrame loop is skipped entirely.
+        r2: whether the effect is blocking or not (i.e. whether the function should wait until it is finished or 100 frames have passed to return)
+        r3: WAN offset on entity sprite to use
+        stack[0]: if 2, waits until any in-progress effects are finished before playing the given one; if 1, waits only for blocking effects
+        stack[1]: whether to still play the effect even if the entity is using a non-flying two-turn move like Dig or Shadow Force
         stack[2]: direction of effect
         stack[3]: custom oam_adjustment_info array for the animation_control struct (length 6, or null if should use default values)
-        others: ?
-        return: status code, or maybe the number of frames or something? Either way, -1 seems to indicate the animation being finished or something?
+        return: -1 if the animation is finished / exceeded 100 frames, or a unique id for the playing effect otherwise
     - name: PlayEffectAnimationPos
       address:
         EU: 0x22E418C
@@ -803,8 +803,8 @@ overlay29:
         
         r0: Position where the effect should be played
         r1: Effect ID
-        r2: Unknown flag (same as the one in PlayEffectAnimationEntity)
-        return: Result of call to PlayEffectAnimationPixelPos
+        r2: whether the effect is blocking or not (i.e. whether the function should wait until it is finished or 100 frames have passed to return)
+        return: -1 if the animation is finished / exceeded 100 frames, or a unique id for the playing effect otherwise
     - name: PlayEffectAnimationPixelPos
       address:
         EU: 0x22E41D0
@@ -815,19 +815,19 @@ overlay29:
         
         r0: Pixel position where the effect should be played
         r1: Effect ID
-        r2: Unknown flag (same as the one in PlayEffectAnimationEntity)
-        return: Same as PlayEffectAnimationEntity
-    - name: AnimationDelayOrSomething
+        r2: whether the effect is blocking or not (i.e. whether the function should wait until it is finished or 100 frames have passed to return)
+        return: -1 if the animation is finished / exceeded 100 frames, or a unique id for the playing effect otherwise
+    - name: FinishPlayingEffectAnimations
+      aliases:
+        - AnimationDelayOrSomething
       address:
         EU: 0x22E4290
         NA: 0x22E38E0
         JP: 0x22E4F50
       description: |-
-        Called whenever most (all?) animations are played. Does not return until the animation is over.
+        Waits until currently playing effect animations are finished, and returns only when they are done. Might have some other effects too.
         
-        Might wait until the animation is done? Contains several loops that call AdvanceFrame.
-        
-        r0: ?
+        r0: if 0, will only wait until effects with an is_non_blocking field equal to 0 finish; if 1, waits for all effects to finish
     - name: CopyStatusIconFlags
       address:
         EU: 0x22E43F0
@@ -3281,6 +3281,15 @@ overlay29:
         Checks if an entity has the ability Truant, and if so tries to apply the pause status to it.
         
         r0: pointer to entity
+    - name: TryPointCameraToFarOffTeammate
+      address:
+        EU: 0x22FA24C
+      description: |-
+        Attempts to place the camera on top of the specified teammate.
+        
+        If the monster is already onscreen or the far-off pals option is disabled, the function does nothing.
+        
+        r0: entity pointer
     - name: TryPointCameraToMonster
       address:
         EU: 0x22FA2C0
@@ -3293,7 +3302,7 @@ overlay29:
         
         r0: Entity pointer. Must be a monster, otherwise the function does nothing.
         r1: ?
-        r2: ?
+        r2: whether to fill the minimap at the monster's position
     - name: ReevaluateSnatchMonster
       address:
         EU: 0x22FA37C
@@ -5228,6 +5237,13 @@ overlay29:
         
         r0: user entity pointer
         r1: target entity pointer
+    - name: ResetTypeChanges
+      address:
+        EU: 0x230870C
+      description: |-
+        Resets any type changes that the given monster has undergone.
+        
+        r0: entity pointer
     - name: EndProtectStatus
       address:
         EU: 0x2308744
@@ -6499,13 +6515,15 @@ overlay29:
         r2: flag to log a message on failure
         r3: flag to only perform the check for inflicting without actually inflicting
         return: Whether or not the status could be inflicted
-    - name: EndLeechSeedStatusForAllTargets
+    - name: EndLeechSeedClassStatusForAllTargets
+      aliases:
+        - EndLeechSeedStatusForAllTargets
       address:
         EU: 0x2316434
         NA: 0x23159D4
         JP: 0x2316EAC
       description: |-
-        Ends the Leech Seed status for all monsters that the given monster gave the status to.
+        Ends the Leech Seed and Destiny Bond status for all monsters that the given monster gave the status to.
         
         r0: user entity pointer
     - name: TryInflictDestinyBondStatus

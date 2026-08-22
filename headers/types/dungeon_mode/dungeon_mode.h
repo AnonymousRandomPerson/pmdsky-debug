@@ -1260,26 +1260,6 @@ struct trap_animation {
 };
 ASSERT_SIZE(struct trap_animation, 2);
 
-// Unverified, ported from Irdkwia's notes
-struct effect_animation {
-    int field_0x0;
-    int file_index; // 0x4: File index in pack 3 (effect.bin)
-    int field_0x8;
-    // 0xC: Some sort of index into the file. Related animations are grouped together into the same
-    // file and indexed with this. Is used as the animation_key parameter in
-    // SetAnimationForAnimationControl.
-    int animation_index;
-    int se_id; // 0x10: Sound effect id, passed to PlaySeByIdVolume
-    int field_0x14;
-    uint8_t field_0x18;
-    int8_t field_0x19;
-    // 0x1A: Is non-zero if the animation is non-blocking. In this case, the animation will be
-    // delayed until the next time AnimationDelayOrSomething is called.
-    uint8_t is_non_blocking;
-    uint8_t unk_repeat; // 0x1B: If non-zero, makes the animation repeat a bunch of times
-};
-ASSERT_SIZE(struct effect_animation, 28);
-
 // Contains data about a monster that spawns in a dungeon
 struct monster_spawn_entry {
     uint16_t level_mult_512; // 0x0: Spawn level << 9
@@ -2558,8 +2538,8 @@ struct message_log_info {
     undefined field_0x1;
     undefined field_0x2;
     undefined field_0x3;
-    struct alert_box_info* alert_box_info;
-    // 0x4: If this does not match the current user, a new group will always start
+    struct alert_box_info* alert_box_info; // 0x4
+    // 0x8: If this does not match the current user, a new group will always start
     struct entity* last_user;
 };
 ASSERT_SIZE(struct message_log_info, 12);
