@@ -629,11 +629,12 @@ void BoostDefensiveStat(struct entity* user, struct entity* target, int stat_idx
 int FlashFireShouldActivate(struct entity* attacker, struct entity* defender);
 void ActivateFlashFire(struct entity* attacker, struct entity* defender);
 void ApplyOffensiveStatMultiplier(struct entity* user, struct entity* target, int stat_idx,
-                                  int multiplier, undefined param_5);
+                                  int multiplier, bool display_message);
 void ApplyDefensiveStatMultiplier(struct entity* user, struct entity* target, int stat_idx,
-                                  int multiplier, undefined param_5);
+                                  int multiplier, bool display_message);
 void BoostHitChanceStat(struct entity* user, struct entity* target, int stat_idx);
-void LowerHitChanceStat(struct entity* user, struct entity* target, int stat_idx, int param_4);
+void LowerHitChanceStat(struct entity* user, struct entity* target, int stat_idx,
+                        bool display_message);
 bool TryInflictCringeStatus(struct entity* user, struct entity* target, bool log_failure,
                             bool check_only);
 bool TryInflictParalysisStatus(struct entity* user, struct entity* target, bool log_failure,

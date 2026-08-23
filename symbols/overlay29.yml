@@ -6227,7 +6227,7 @@ overlay29:
         r1: target entity pointer
         r2: stat index
         r3: multiplier
-        stack[0]: ?
+        stack[0]: whether to display a message indicating the stat multiplier change
     - name: ApplyDefensiveStatMultiplier
       address:
         EU: 0x23149C4
@@ -6242,7 +6242,7 @@ overlay29:
         r1: target entity pointer
         r2: stat index
         r3: multiplier
-        stack[0]: ?
+        stack[0]: whether to display a message indicating the stat multiplier change
     - name: BoostHitChanceStat
       address:
         EU: 0x2314B44
