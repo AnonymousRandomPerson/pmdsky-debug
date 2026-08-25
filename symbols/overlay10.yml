@@ -1299,7 +1299,7 @@ overlay10:
         EU: 0x2
         NA: 0x2
         JP: 0x2
-      description: "The chance of Acid lowering defense and Psychic lower special defense, as a percentage (20%)."
+      description: "The chance of Acid lowering defense and Psychic lowering special defense, as a percentage (20%)."
     - name: BURN_DAMAGE_COOLDOWN
       address:
         EU: 0x22C4F68
