@@ -612,6 +612,16 @@ overlay10:
         NA: 0x2
         JP: 0x2
       description: The amount added to the recruit rate when holding an Amber Tear.
+    - name: EARTH_POWER_LOWER_SPECIAL_DEFENSE_CHANCE
+      address:
+        EU: 0x22C4DD8
+        NA: 0x22C4480
+        JP: 0x22C5B68
+      length:
+        EU: 0x2
+        NA: 0x2
+        JP: 0x2
+      description: "The chance of Earth Power lowering special defense, as a percentage (20%)."
     - name: MUDDY_WATER_LOWER_ACCURACY_CHANCE
       address:
         EU: 0x22C4DDC
@@ -872,6 +882,26 @@ overlay10:
         NA: 0x2
         JP: 0x2
       description: "The chance of Octazooka lowering accuracy, as a percentage (60%)."
+    - name: SEED_FLARE_LOWER_SPECIAL_DEFENSE_CHANCE
+      address:
+        EU: 0x22C4E5C
+        NA: 0x22C4504
+        JP: 0x22C5BEC
+      length:
+        EU: 0x2
+        NA: 0x2
+        JP: 0x2
+      description: "The chance of Seed Flare lowering special defense, as a percentage (20%)."
+    - name: FLASH_CANNON_LOWER_SPECIAL_DEFENSE_CHANCE
+      address:
+        EU: 0x22C4E60
+        NA: 0x22C4508
+        JP: 0x22C5BF0
+      length:
+        EU: 0x2
+        NA: 0x2
+        JP: 0x2
+      description: "The chance of Flash Cannon lowering special defense, as a percentage (20%)."
     - name: LUSTER_PURGE_LOWER_SPECIAL_DEFENSE_CHANCE
       address:
         EU: 0x22C4E64
@@ -1260,6 +1290,16 @@ overlay10:
         NA: 0x2
         JP: 0x2
       description: "The chance of Crush Claw lowering defense, as a percentage (50%)."
+    - name: ACID_PSYCHIC_LOWER_DEFENSE_CHANCE
+      address:
+        EU: 0x22C4F64
+        NA: 0x22C460C
+        JP: 0x22C5CF4
+      length:
+        EU: 0x2
+        NA: 0x2
+        JP: 0x2
+      description: "The chance of Acid lowering defense and Psychic lower special defense, as a percentage (20%)."
     - name: BURN_DAMAGE_COOLDOWN
       address:
         EU: 0x22C4F68
@@ -1270,6 +1310,16 @@ overlay10:
         NA: 0x2
         JP: 0x2
       description: The number of turns between passive burn damage.
+    - name: BUG_BUZZ_LOWER_SPECIAL_DEFENSE_CHANCE
+      address:
+        EU: 0x22C4F6C
+        NA: 0x22C4614
+        JP: 0x22C5CFC
+      length:
+        EU: 0x2
+        NA: 0x2
+        JP: 0x2
+      description: "The chance of Bug Buzz lowering special defense, as a percentage (20%)."
     - name: SHADOW_BALL_LOWER_SPECIAL_DEFENSE_CHANCE
       address:
         EU: 0x22C4F74
