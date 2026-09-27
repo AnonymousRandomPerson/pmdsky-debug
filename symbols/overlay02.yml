@@ -140,7 +140,7 @@ overlay2:
     - name: Nnsi_G2dFontGetTextHeight
       address:
         EU: 0x232AA84
-    - name: Nnsi_G2dFontGetTextWidth
+    - name: Nnsi_G2dFontGetTextRect
       address:
         EU: 0x232AAF8
     - name: GetCharIndex1D
@@ -2997,7 +2997,7 @@ overlay2:
     - name: Dwci_SettinglSetGateway
       address:
         EU: 0x2347FA0
-    - name: Dwci_SettinglSetDnsP
+    - name: Dwci_SettinglSetDnsS
       address:
         EU: 0x2347FC0
     - name: Dwci_SettinglGetSsid
@@ -3267,13 +3267,13 @@ overlay2:
     - name: Dwci_Mov_WH_StateOutSetParentParam
       address:
         EU: 0x234B4DC
-    - name: Dwci_Mov_WH_StateInStartParent
+    - name: Dwci_Mov_Wh_StateInSetParentWepKey
       address:
         EU: 0x234B548
     - name: Dwci_Mov_WH_StateOutSetParentWepKey
       address:
         EU: 0x234B5AC
-    - name: Dwci_Mov_WH_StateInSetParentWepKey
+    - name: Dwci_Mov_Wh_StateInStartParent
       address:
         EU: 0x234B5E4
     - name: Dwci_Mov_WH_StateOutStartParent
